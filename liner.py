@@ -6,13 +6,7 @@
 # 4단계 : 나머지 경우는 행렬을 가우스-조던 소거법으로 진행
 # 5단계 : 자유변수로 무수히 많은 해 표현하기
 import sys
-#소숫점 이쁘게 표현
-def fmt(num):
-    if abs(num - int(num)) < 1e-9:
-        return str(int(num))
-    else:
-        return f"{num:.3f}"
-    
+
 #2단계
 def det(A):     #3x3 행렬식 구하기
     res=0
@@ -63,6 +57,7 @@ def gauss(A):
 def solve_matrix():
     print("연립방정식의 계수 부분만 한줄 씩 입력해주세요") 
     print("예시 >>\n1 2 3\n4 5 6\n7 8 9")
+    print("--------------------")
     A=[[int(x) for x in sys.stdin.readline().split()] for _ in range(3)]
     print("상수항 3개를 한줄에 입력해주세요") 
     print("예시 >> 1 2 5")
@@ -96,7 +91,7 @@ def solve_matrix():
         t2=(y[1]-U[1][2]*t3)/U[1][1]
         t1=(y[0]-U[0][1]*t2-U[0][2]*t3)/U[0][0]
         
-        print(f"해: x={fmt(t1)}, y={fmt(t2)}, z={fmt(t3)}")
+        print(f"해: x={t1}, y={t2}, z={t3}")
     
     #4단계
     else:
@@ -113,11 +108,11 @@ def solve_matrix():
             free_cols = [i for i in range(3) if i not in pivot_cols]
             ans=[0,0,0]
             for f in free_cols:
-                ans[f]=chr(ord('s')+f)
+                ans[f]=chr(ord('r')+f)
             for row in range(3):
                 for col in range(3):
                     if col in pivot_cols and A[row][col]==1:
-                        ex=str(A[row][3]) #일단 상수항
+                        ex=A[row][3] #일단 상수항 부터 시작
                         for f in free_cols:
                             if A[row][f]==1:
                                 ex+=f"-{ans[f]}"
@@ -126,10 +121,12 @@ def solve_matrix():
                             elif A[row][f]==0:
                                 continue
                             else:
-                                ex+=f"{-A[row][f]}{ans[f]}"
+                                if A[row][f]>0:
+                                    ex+=f"{-A[row][f]}{ans[f]}"
+                                else:
+                                    ex+=f"+{-A[row][f]}{ans[f]}"
                         ans[col]=ex
-            print(f"x={fmt(ans[0])} y={fmt(ans[1])} z={fmt(ans[2])}")
-
+            print(f"x={ans[0]} y={ans[1]} z={ans[2]}")
 
 
 print("과제를 몇번 테스트 하시겠습니까?")
