@@ -128,11 +128,11 @@ def solve_matrix():
                         ans[col]=ex
             print(f"x={ans[0]} y={ans[1]} z={ans[2]}")
 
-
-print("과제를 몇번 테스트 하시겠습니까?")
-t=int(sys.stdin.readline())
-for _ in range(t):
-    solve_matrix()
+if __name__=="__main__":
+    print("과제를 몇번 테스트 하시겠습니까?")
+    t=int(sys.stdin.readline())
+    for _ in range(t):
+        solve_matrix()
 
 
 
